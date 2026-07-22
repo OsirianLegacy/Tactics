@@ -20,7 +20,27 @@ FetchContent_MakeAvailable(raylib)
 
 # 5. Define your game's executable name and source files
 # Removed the '$' symbols so "Tactics" is treated as the actual target name
-add_executable(Tactics main.cpp)
+add_executable(Tactics main.cpp
+        Data.h
+        Game.cpp
+        Game.h
+        Unit.cpp
+        Unit.h
+        UI.cpp
+        UI.h
+        Action.cpp
+        Action.h
+        Combat/Combat.cpp
+        Combat/Combat.h
+        Combat/Grid.cpp
+        Combat/Grid.h
+        Options.h
+        Colors.h)
 
+add_custom_command(TARGET Tactics POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/Assets
+        $<TARGET_FILE_DIR:Tactics>/Assets
+)
 # 6. Link raylib to your executable target
 target_link_libraries(Tactics PRIVATE raylib)
